@@ -1,0 +1,49 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/movie_booking?useSSL=false
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  rabbitmq:
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 1s
+          max-attempts: 5
+          max-interval: 5s
+          multiplier: 2
+
+server:
+  port: 8084
+  servlet:
+    context-path: /movie-schedule-api
+logging:
+  file:
+    name: D:/Development/WS/log/local/movie-schedule-api/movie-schedule-api.log
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    org.springframework: INFO
+    org.hibernate: INFO
+    org.example.movie.schedule: INFO
+    org.springframework.web: TRACE
+
+message:
+  messageConfiguration:
+    host: localhost
+    port: 20004
+    username: guest
+    password: guest
+    virtualHost: snk-rmq
+  movieScheduleExchangeConfiguration:
+    exchange: movieScheduleExchange
+    routingKey: movie.schedule
+    queue: movieScheduleQueue
+  theatreDetailsExchangeConfiguration:
+    exchange: movieScheduleExchange
+    routingKey: movie.theatre.details
+    queue: theatreDetailsQueue
