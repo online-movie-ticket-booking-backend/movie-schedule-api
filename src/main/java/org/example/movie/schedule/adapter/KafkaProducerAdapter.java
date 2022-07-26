@@ -100,5 +100,17 @@ public class KafkaProducerAdapter {
                                                 .getTheatreName())));
         return MovieScheduleResponse.of().setMovieScheduleMap(movieScheduleMap);
     }
+
+    @KafkaListener(topics = "${kafka.movieBookingApi.movieSchedule.topic.request-unique-id}",
+            containerFactory = "movieScheduleRequestListenerContainerFactory",
+            groupId = "${kafka.movieBookingApi.groupName}"
+    )
+    @SendTo()
+    public MovieScheduleResponse receiveUniqueId(
+            @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String uniqueId,
+            MovieScheduleRequest request) throws ExecutionException, InterruptedException, TimeoutException {
+        log.info("Received Message with : {}", uniqueId);
+       return movieScheduleService.fetchMovieScheduleByUniqueId(uniqueId,request);
+    }
 }
 

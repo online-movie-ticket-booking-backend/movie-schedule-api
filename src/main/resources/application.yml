@@ -48,7 +48,8 @@ kafka:
     movieSchedule:
       topic:
         request: movie-schedule-request
-        response: movie-schedule-response
+        request-unique-id: movie-schedule-unique-id-request
+#        response: movie-schedule-response
         serialization-class: org.example.movie.core.common.schedule.MovieInventoryRequest
     theatreDetails:
       topic:

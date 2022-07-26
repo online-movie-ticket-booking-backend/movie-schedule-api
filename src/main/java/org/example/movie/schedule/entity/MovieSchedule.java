@@ -34,6 +34,10 @@ public class MovieSchedule {
     @Column(name = "ms_total_seat_count", nullable = true, length = 255)
     private int msTotalSeatCount;
 
+    @Basic
+    @Column(name = "ms_unique_id", nullable = true, length = 255)
+    private String msUniqueId;
+
     public Integer getMsId() {
         return msId;
     }

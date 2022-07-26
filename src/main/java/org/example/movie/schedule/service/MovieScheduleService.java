@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.example.movie.core.common.schedule.MovieScheduleRequest;
+import org.example.movie.core.common.schedule.MovieScheduleResponse;
 import org.example.movie.core.common.schedule.MovieScheduleTheatre;
 import org.example.movie.core.common.schedule.MovieShow;
 import org.example.movie.core.common.schedule.TheatreDetails;
 import org.example.movie.schedule.entity.MovieSchedule;
 import org.example.movie.schedule.repository.MovieScheduleRepository;
+import org.example.movie.schedule.utility.Converter;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -34,6 +36,22 @@ public class MovieScheduleService {
                                         movieScheduleRequest.getScheduleDate(),
                                         cityMapping)));
         return returnMap;
+
+    }
+
+    public MovieScheduleResponse fetchMovieScheduleByUniqueId(String uniqueId, MovieScheduleRequest movieScheduleRequest) {
+        MovieSchedule movieSchedule = movieScheduleRepository.findByMsUniqueId(
+                        movieScheduleRequest.getMovieScheduleUniqueId())
+                .orElseGet(MovieSchedule::new);
+        return
+                MovieScheduleResponse
+                        .of()
+                        .setScheduleDate(movieSchedule.getMsDate().toLocalDate().toString())
+                        .setTheatreDetails(TheatreDetails.of().setTheatreUniqueId(movieSchedule.getMsTheatreUniqueId()))
+                        .setMovieShow(MovieShow
+                                .of()
+                                .setSeatCount(movieSchedule.getMsTotalSeatCount())
+                                .setShowtime(movieSchedule.getMsTime()));
 
     }
 
