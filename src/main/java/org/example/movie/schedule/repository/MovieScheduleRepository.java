@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface MovieScheduleRepository extends JpaRepository<MovieSchedule, Integer> {
 
-    List<MovieSchedule> findAllByMsMcmIdAndMsDate(String msMcmId, Date msDate);
+    List<MovieSchedule> findAllByMsDateAndMsMcmId(Date msDate, String msMcmId);
 }

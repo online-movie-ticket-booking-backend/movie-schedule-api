@@ -11,7 +11,7 @@ import java.sql.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "movie_schedule", schema = "movie_booking", catalog = "")
+@Table(name = "movie_schedule", schema = "movie_schedule", catalog = "")
 public class MovieSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -29,6 +29,10 @@ public class MovieSchedule {
     @Basic
     @Column(name = "ms_theatre_unique_id", nullable = true, length = 255)
     private String msTheatreUniqueId;
+
+    @Basic
+    @Column(name = "ms_total_seat_count", nullable = true, length = 255)
+    private int msTotalSeatCount;
 
     public Integer getMsId() {
         return msId;
@@ -68,6 +72,14 @@ public class MovieSchedule {
 
     public void setMsTheatreUniqueId(String msTheatreUniqueId) {
         this.msTheatreUniqueId = msTheatreUniqueId;
+    }
+
+    public int getMsTotalSeatCount() {
+        return msTotalSeatCount;
+    }
+
+    public void setMsTotalSeatCount(int msTotalSeatCount) {
+        this.msTotalSeatCount = msTotalSeatCount;
     }
 
     @Override
